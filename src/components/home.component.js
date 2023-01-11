@@ -2,9 +2,9 @@ import React from 'react'
 const Home=()=>{
   return(
     <div>
-      <h3>
+      <h2>
         MQTT-React application
-      </h3>
+      </h2>
     </div>
   );
 };

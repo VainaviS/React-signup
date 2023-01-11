@@ -7,6 +7,7 @@ import Broker from './components/broker.component'
 import Publisher from './components/pub.component'
 import Subscriber from './components/sub.component'
 import Home from './components/home.component'
+import User from './components/userDetails'
 
 function App() {
   return (
@@ -35,6 +36,11 @@ function App() {
                     Sub
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to={'/userDetails'}>
+                    User
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
@@ -47,6 +53,7 @@ function App() {
               <Route path="/Pub" element={<Publisher />} />
               <Route path="/broker" element={<Broker />} />
               <Route path="/Sub" element={<Subscriber />} />
+              <Route path="/user" element={<User />} />
             </Routes>
           </div>
         </div>
