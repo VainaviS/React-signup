@@ -1,26 +1,39 @@
-const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
+app.use(express.json());
+const cors = require("cors");
+app.use(cors());
+const bcrypt = require("bcryptjs");
+app.set("view engine", "ejs");
+app.use(express.urlencoded({ extended: false }));
 
-//configure app for incoming post data
-const expressJson = express.json();
-const bodyParser  = express.urlencoded({extended: true});
-app.use([expressJson, bodyParser])
+var nodemailer = require("nodemailer");
 
-// Connection URL
-const url = "mongodb://localhost:27017";
+const mongoUrl = "mongodb+srv://vainavi:vainaviP@cluster0.zljglwn.mongodb.net/?retryWrites=true&w=majority";
 
-// Use connect method to connect to the Server
-mongoose.connect(url,).then(() => 
-{
-    console.log("connection successful");
-}).catch((err) => console.log("not connected"));
+mongoose
+  .connect(mongoUrl, {
+    useNewUrlParser: true,
+  })
+  .then(() => {
+    console.log("Connected to database");
+  })
+  .catch((e) => console.log(e));
 
-app.post('/sendText', (req, res)=>{
-    const text = req.body.text;
-    //you need to create mongoose schema to save. saveSchema here I'm asuming.
-    saveSchema.save({text: text})
-    .then(res=>{res.json("Saved")})
-    .catch(err=>{console.log(err); res.json("Error! cannot save")})
-  });
-  app.listen(5000, ()=>{console.log("Server running at port 5000")});
+require("./userDetails");
+
+const User = mongoose.model("UserInfo");
+app.post("/register", async (req, res) => {
+  const { port, addr, topic} = req.body;
+    await User.create({
+      port,
+      addr,
+      topic
+    });
+    res.send({ status: "ok" });
+});
+
+app.listen(5000, () => {
+  console.log("Server Started");
+});
