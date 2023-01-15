@@ -12,8 +12,27 @@ export default class Subscriber extends Component {
   }
   handleSubmit(e){
     e.preventDefault();
-    const{subport, subaddr,subtopic}= this.state;
-    console.log(subport, subaddr, subtopic);
+    const{port, addr,topic}= this.state;
+    console.log(port, addr, topic);
+    fetch("http://localhost:5000/register",{
+      method:"POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept :"application/json",
+        "Access-Control-Allow-Origin":"*"
+      },
+      body: JSON.stringify({
+        port,
+        addr, 
+        topic
+      }),
+
+    })
+    .then((res)=>res.json())
+    .then((data)=>{
+      console.log(data, "Sub Register");
+    });
   }
   render() {
     return (

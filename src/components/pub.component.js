@@ -12,8 +12,27 @@ export default class Publisher extends Component {
   }
   handleSubmit(e){
     e.preventDefault();
-    const{pubport, pubaddr,pubtopic}= this.state;
-    console.log(pubport, pubaddr, pubtopic);
+    const{port, addr,topic}= this.state;
+    console.log(port, addr, topic);
+    fetch("http://localhost:5000/register",{
+      method:"POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept :"application/json",
+        "Access-Control-Allow-Origin":"*"
+      },
+      body: JSON.stringify({
+        port,
+        addr, 
+        topic
+      }),
+
+    })
+    .then((res)=>res.json())
+    .then((data)=>{
+      console.log(data, "Pub Register");
+    });
   }
   render() {
     return (
